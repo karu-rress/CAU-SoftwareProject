@@ -57,11 +57,11 @@ public class Picture {
 
     @Override
     public String toString() {
-        return  "<" + id +                             "> " +
-                "<" + getTimeAsString() +              "> " +
-                "<" + imageInfo +                      "> " +
-                "<" + Stuff.arrayToString(stuffs) +    "> " +
-                "<" + Tag.arrayToString(tags) +        "> " +
-                "<" + comment + ">";
+        return  "< " + id +                            " > " +
+                "< " + getTimeAsString() +             " > " +
+                "< " + imageInfo +                     " > " +
+                "< " + Stuff.arrayToString(stuffs) +   " > " +
+                "< " + Tag.arrayToString(tags) +       " > " +
+                "< " + comment + 					   " >";
     }
 }
