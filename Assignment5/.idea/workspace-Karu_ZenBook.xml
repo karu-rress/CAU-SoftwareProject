@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6d23d0cc-ebaa-49c8-a7d3-1beca2c818a2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Assignment4/src/MyArrayList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment4/src/ObjectArrayList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment4/src/ObjectArrayListLimitedCapacity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment4/src/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assignment5.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picture-normal.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/picture-test.output" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AddFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Image.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/MainFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Picture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PictureList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PicturePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PictureSection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SearchFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Stuff.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StuffList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/StuffPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Tag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/Picture.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/Picture.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2gd8xZ6pPRpmvBKKoeBWkSu47G3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/OneDrive - 중앙대학교/CAU/Grade 2 Semester 1/[전선] 소프트웨어프로젝트/Assignments/Assignment5&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <module name="Assignment5" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-f644763e9732-8c5c9ae5" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6d23d0cc-ebaa-49c8-a7d3-1beca2c818a2" name="Changes" comment="" />
+      <created>1716016342500</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716016342500</updated>
+      <workItem from="1716016343334" duration="490000" />
+      <workItem from="1716193946065" duration="24000" />
+      <workItem from="1716204679581" duration="11186000" />
+      <workItem from="1716267890202" duration="3765000" />
+      <workItem from="1716283035293" duration="10662000" />
+      <workItem from="1716361134485" duration="3504000" />
+      <workItem from="1716372927878" duration="1399000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
