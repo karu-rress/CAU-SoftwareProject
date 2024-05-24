@@ -3,3 +3,6 @@
 *.pdf
 
 notice/
+
+# 출력 파일
+*.output
