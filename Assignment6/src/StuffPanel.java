@@ -1,0 +1,48 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class StuffPanel extends JPanel {
+    private final Stuff stuff;
+    private final JPanel pWest = new JPanel(new GridLayout(3, 1));
+    private final JPanel pCenter = new JPanel(new GridLayout(3, 1));
+    private final JLabel jlbType = new JLabel("Type");
+    private final JLabel jlbName = new JLabel("Name");
+    private final JLabel jlbTags = new JLabel("Tags");
+    private final JTextField jtfType = new JTextField();
+    private final JTextField jtfName = new JTextField();
+    private final JTextField jtfTags = new JTextField();
+    public static final GridBagConstraints GBC = new GridBagConstraints();
+    static {
+        GBC.fill = GridBagConstraints.HORIZONTAL;
+        GBC.weightx = 1;
+        GBC.gridx = 0;
+    }
+
+    public StuffPanel(Stuff s) {
+        this(s, false);
+    }
+    public StuffPanel(Stuff s, boolean editable) {
+        super(new BorderLayout());
+        stuff = s;
+
+        // West
+        for (JLabel lb : new JLabel[]{ jlbType, jlbName, jlbTags })
+            pWest.add(lb);
+
+        // Center
+        if (stuff != null) {
+            jtfType.setText(stuff.getType());
+            jtfName.setText(stuff.getName());
+            jtfTags.setText(Tag.arrayToString(stuff.getTags()));
+        }
+
+        for (JTextField tf : new JTextField[] {jtfType, jtfName, jtfTags }) {
+            tf.setEditable(editable);
+            pCenter.add(tf);
+        }
+
+        add(pWest, BorderLayout.WEST);
+        add(pCenter, BorderLayout.CENTER);
+        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    }
+}
