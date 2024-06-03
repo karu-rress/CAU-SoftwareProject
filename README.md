@@ -11,15 +11,15 @@
 
 ### Class Design
 ![Class Design](./Assets/class_design.png)
-- Tag
-- Picture
-- Image
-- Stuff
-- PictureList
-- StuffList
-- PictureSection
-- PicturePanel
-- StuffPanel
-- MainFrame
-- AddFrame
-- SearchFrame
+- Tag (태그 정보)
+- Picture (사진 정보)
+- Image (이미저 정보)
+- Stuff (사물 정보)
+- PictureList (Picture의 리스트)
+- StuffList (사물 정보 데이터베이스)
+- PictureSection (PictureList의 GUI)
+- PicturePanel (Picture의 GUI)
+- StuffPanel (Stuff의 GUI)
+- MainFrame (메인 화면)
+- AddFrame (사진 추가 화면)
+- SearchFrame (사진 검색 화면)
