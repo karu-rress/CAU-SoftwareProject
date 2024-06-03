@@ -1,31 +1,44 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
+/**
+ * 사진 정보를 추가하는 Frame
+ */
 public class AddFrame extends JFrame {
-    private final JPanel pNorth = new JPanel(new GridLayout(1, 2));
-    private final JScrollPane spCenter = new JScrollPane();
-    private final JPanel pStuffs = new JPanel(new GridBagLayout());
-    private final JPanel pSouth = new JPanel(new GridLayout(2, 1));
+    private final JPanel pNorth         = new JPanel(new GridLayout(1, 2));
+    private final JScrollPane spCenter  = new JScrollPane();
+    private final JPanel pStuffs        = new JPanel(new GridBagLayout());
+    private final JPanel pSouth         = new JPanel(new GridLayout(2, 1));
 
     // Label은 변하지 않으므로, static final로 선언하여 모든 instance가 공유하도록 함.
-    private static final JLabel jlbTime = new JLabel("Time");
-    private static final JLabel jlbPicTags = new JLabel("(Picture) Tags");
+    private static final JLabel jlbTime     = new JLabel("Time");
+    private static final JLabel jlbPicTags  = new JLabel("(Picture) Tags");
     private static final JLabel jlbComments = new JLabel("Comments");
 
-    private final JTextField jtfTime = new JTextField();
-    private final JTextField jtfPicTags = new JTextField();
-    private final JTextField jtfComments = new JTextField();
+    private final JTextField jtfTime        = new JTextField();
+    private final JTextField jtfPicTags     = new JTextField();
+    private final JTextField jtfComments    = new JTextField();
 
-    private final JButton jbtSelect = new JButton("Select Image File");
-    private final JButton jbtMoreStuff = new JButton("More Stuff");
-    private final JButton jbtInputEnd = new JButton("OK - INPUT END");
+    private final JButton jbtSelect         = new JButton("Select Image File");
+    private final JButton jbtMoreStuff      = new JButton("More Stuff");
+    private final JButton jbtInputEnd       = new JButton("OK - INPUT END");
+
+    private String imagePath = null;
+    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
+    private final MainFrame mainFrame;
+    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
+            "Image Files (*.png, *.jpg, *.gif, *.jpeg, *.jfif, *.webp)",
+            "png", "jpg", "gif", "jpeg", "jfif", "webp");
 
     public AddFrame(MainFrame mainFrame) {
         super("Add a Picture");
         setLayout(new BorderLayout());
+        this.mainFrame = mainFrame;
 
         // North: Time, Tags
         JPanel[] n_pns = new JPanel[2];
@@ -39,7 +52,9 @@ public class AddFrame extends JFrame {
         }
 
         // Center: Type, Name, Tags
-        pStuffs.add(new StuffPanel(null, true), StuffPanel.GBC);
+        StuffPanel stuffPanel = new StuffPanel(null, true);
+        stuffPanels.add(stuffPanel);
+        pStuffs.add(stuffPanel, StuffPanel.GBC);
         spCenter.setViewportView(pStuffs);
         spCenter.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
@@ -61,7 +76,7 @@ public class AddFrame extends JFrame {
 
         pack();
         setSize(500, 250);
-        setLocationRelativeTo(mainFrame);
+        setLocationRelativeTo(this.mainFrame);
         setVisible(true);
 
         ActionListener btnListener = new ButtonHandlerClass();
@@ -69,34 +84,77 @@ public class AddFrame extends JFrame {
             btn.addActionListener(btnListener);
     }
 
+    /**
+     * 이미지 파일을 선택하는 함수
+     */
+    private void selectFile() {
+        JFileChooser jf = new JFileChooser(".");
+        jf.setDialogTitle("Select an image file");
+        jf.setFileFilter(extFilter);
+
+        if (jf.showOpenDialog(AddFrame.this) == JFileChooser.APPROVE_OPTION) {
+            String path = jf.getSelectedFile().getAbsolutePath();
+            imagePath = getRelativePath(path);
+            JOptionPane.showMessageDialog(AddFrame.this,
+                    "Image loaded: " + imagePath, "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * 절대 경로를 상대 경로로 변환하는 함수
+     * @param absolutePath 절대 경로
+     * @return 상대 경로
+     */
+    private static String getRelativePath(String absolutePath) {
+        Path workingPath = Paths.get("").toAbsolutePath();
+        Path pathRelative = workingPath.relativize(Paths.get(absolutePath));
+        return pathRelative.toString();
+    }
+
+    /**
+     * 사물 패널을 추가하는 함수
+     */
+    private void addStuffPanel() {
+        StuffPanel sp = new StuffPanel(null, true);
+        stuffPanels.add(sp);
+        pStuffs.add(sp, StuffPanel.GBC);
+        spCenter.setViewportView(pStuffs);
+    }
+
+    /**
+     * PictureSection에 사진 패널을 추가하는 함수
+     */
+    private void addPicture() {
+        if (imagePath == null) {
+            JOptionPane.showMessageDialog(AddFrame.this,
+                    "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        LocalDateTime time = jtfTime.getText().isEmpty() ? null
+                : LocalDateTime.parse(jtfTime.getText(), Picture.dateFormatter);
+        ArrayList<Tag> tags = Tag.parse(jtfPicTags.getText());
+        ArrayList<Stuff> stuffs =  new ArrayList<Stuff>();
+        for (StuffPanel sp : stuffPanels)
+            stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
+        String comment = jtfComments.getText();
+
+        Picture pic = new Picture(time, imagePath, stuffs, tags, comment);
+        mainFrame.addPicture(pic);
+        dispose();
+    }
+
+    // 버튼 클릭시 콜백
     private class ButtonHandlerClass implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JButton btn = (JButton) e.getSource();
-
-            if (btn == jbtSelect) {
-                JFileChooser jf = new JFileChooser();
-                jf.setDialogTitle("Select an image file");
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files (*.png, *.jpg, *.gif, *.jpeg, *.webp)",
-                        "png", "jpg", "gif", "jpeg", "webp");
-                jf.setFileFilter(filter);
-                jf.showOpenDialog(AddFrame.this);
-
-
-
-
-
-
-
-
-            }
-            else if (btn == jbtMoreStuff) {
-                pStuffs.add(new StuffPanel(null, true), StuffPanel.GBC);
-                spCenter.setViewportView(pStuffs);
-            }
-            else if (btn == jbtInputEnd) {
-
-            }
+            Object btn = e.getSource();
+            if (btn == jbtSelect)
+                selectFile();
+            else if (btn == jbtMoreStuff)
+                addStuffPanel();
+            else if (btn == jbtInputEnd)
+                addPicture();
         }
     }
 }

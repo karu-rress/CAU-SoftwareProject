@@ -8,3 +8,18 @@
 - 설계학점: 1학점
 
 ## GUI Picture Search
+
+### Class Design
+![Class Design](./Assets/class_design.png)
+- Tag
+- Picture
+- Image
+- Stuff
+- PictureList
+- StuffList
+- PictureSection
+- PicturePanel
+- StuffPanel
+- MainFrame
+- AddFrame
+- SearchFrame

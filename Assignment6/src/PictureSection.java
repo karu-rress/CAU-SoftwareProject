@@ -1,37 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * 사진 패널들을 담는 영역
+ */
 public class PictureSection extends JPanel {
-    private PictureList pictureList = new PictureList(PictureList.DATA_FILE);
+    private PictureList             pictureList;
     private ArrayList<PicturePanel> picturePanels = new ArrayList<PicturePanel>();
-    private PicturePanel selected = null; // 현재 선택된 PicturePanel
+    private PicturePanel            selected = null; // 현재 선택된 PicturePanel
 
-    public PictureSection() { initialize(); }
+    public PictureSection() {
+        pictureList = new PictureList(PictureList.DATA_FILE);
+        initialize();
+    }
     public PictureSection(PictureList list) {
         pictureList = list;
         initialize();
     }
 
-    public Picture getSelectedPicture() {
-        if (selected == null)
-            return null;
-        return selected.getPicture();
-    }
-
-    public void deleteSelectedPicture() {
-        if (selected == null) return;
-
-        removePicturePanel(selected);
-        selected = null;
-
-        revalidate();
-        repaint();
-    }
-
+    /**
+     * 사진 패널들을 불러오는 함수
+     */
     private void initialize() {
         for (Picture p : pictureList.getPictures())
             picturePanels.add(new PicturePanel(p));
@@ -45,39 +36,33 @@ public class PictureSection extends JPanel {
         }
     }
 
-    public void reloadFromFile() { reloadFromFile(PictureList.DATA_FILE); }
-
-    public void reloadFromFile(String fileName) {
-        removeAll(); // 모든 요소 삭제
-        revalidate();
-        repaint();
-
-        pictureList = new PictureList(fileName); // 초기화
-        picturePanels = new ArrayList<PicturePanel>();
-
-        initialize();
+    public PictureList getPictureList() { return pictureList; }
+    public Picture getSelectedPicture() {
+        if (selected == null)
+            return null;
+        return selected.getPicture();
+    }
+    public boolean isPictureSelected() {
+        return selected != null;
     }
 
-    public void saveToFile(String fileName) throws IOException {
-        pictureList.saveToFile(fileName);
-    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PictureSection))
+            return false;
 
-    private void removePicturePanel(PicturePanel pp) {
-        picturePanels.remove(pp); // 배열에서도 삭제하고
-        this.remove(selected);    // 화면에서도 삭제한다
-
+        return pictureList.equals(((PictureSection)obj).pictureList);
     }
 
     private class MouseHandlerClass extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            // 이전에 이미 선택된 패널이 있다면
-            if (selected != null)
+            if (selected != null)             // 이전에 이미 선택된 패널이 있다면
                 selected.setBorderAsSelected(false);
 
             PicturePanel pp = (PicturePanel)e.getSource();
             selected = pp;
-            pp.setBorderAsSelected(true); // 테두리 색 변화
+            pp.setBorderAsSelected(true);   // 테두리 색 변화
         }
     }
 }

@@ -1,31 +1,37 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 
+/**
+ * 메인 프레임 (메인 화면)
+ */
 public class MainFrame extends JFrame {
-    private final JPanel pEast = new JPanel(new GridLayout(5, 1));
+    private final JPanel      pEast    = new JPanel(new GridLayout(5, 1));
     private final JScrollPane spCenter = new JScrollPane();
-    private final JButton jbtShowAll = new JButton("Show All Pictures");
-    private final JButton jbtAdd = new JButton("ADD");
-    private final JButton jbtDelete = new JButton("DELETE");
-    private final JButton jbtLoad = new JButton("LOAD");
-    private final JButton jbtSave = new JButton("SAVE");
-    private final JButton jbtSearch = new JButton("SEARCH");
+
+    private final JButton jbtShowAll   = new JButton("Show All Pictures");
+    private final JButton jbtAdd       = new JButton("ADD");
+    private final JButton jbtDelete    = new JButton("DELETE");
+    private final JButton jbtLoad      = new JButton("LOAD");
+    private final JButton jbtSave      = new JButton("SAVE");
+    private final JButton jbtSearch    = new JButton("SEARCH");
+
+    private PictureList originalPictureList;
     private PictureSection pictureSection = new PictureSection();
-    private static final FileNameExtensionFilter extfilter = new FileNameExtensionFilter(
+    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Dataset File (*.data)", "data");
 
     public MainFrame() {
         super("Simple Picture Search");
         setLayout(new BorderLayout());
+        originalPictureList = new PictureList(pictureSection.getPictureList());
 
-        // Center
+        // Center: PictureSection
         spCenter.setViewportView(pictureSection);
 
-        // East
+        // East: 버튼들
         for (JButton bt : new JButton[]{ jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
             pEast.add(bt);
 
@@ -35,8 +41,8 @@ public class MainFrame extends JFrame {
 
         pack();
         setSize(600, 800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);                // 화면 중앙에 생성
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    // '닫기' 시 프로그램 종료
         setVisible(true);
 
         // ActionListener
@@ -46,83 +52,110 @@ public class MainFrame extends JFrame {
             btn.addActionListener(btnListener);
     }
 
+    public PictureSection getPictureSection() { return pictureSection; }
 
-
-
-
-    private void reloadPictureSection() {
-        reloadPictureSection(PictureList.DATA_FILE);
+    /**
+     * 검색 결과를 무시하고, 모든 사진을 보여주는 함수
+     */
+    private void showAllPictures() {
+        pictureSection = new PictureSection(originalPictureList);
+        spCenter.setViewportView(pictureSection);
     }
 
-    private void reloadPictureSection(String fileName) {
-        PictureList list = new PictureList(fileName);
+    // 추후 이걸 callback으로 구현해도 좋을 것 같다.
+    public void addPicture(Picture pic) {
+        PictureList list = pictureSection.getPictureList();
+        list.add(pic);
+        refreshPictureSection(list);
+    }
+
+    /**
+     * 사진을 삭제하는 함수
+     */
+    private void deletePicture(Picture pic) {
+        PictureList list = pictureSection.getPictureList();
+        list.remove(pic);
+        refreshPictureSection(list);
+    }
+
+    /**
+     * PictureSection을 갱신하는 함수
+     * @param list 사진 정보가 담긴 리스트
+     */
+    private void refreshPictureSection(PictureList list) {
         pictureSection = new PictureSection(list);
         spCenter.setViewportView(pictureSection);
     }
 
-    private void deletePicture() {
-        Picture pic = pictureSection.getSelectedPicture();
-        if (pic == null) {
-            JOptionPane.showMessageDialog(
-                    MainFrame.this,
-                    "삭제할 사진을 먼저 선택하세요.",
-                    "Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // 삭제 역할은 pictureSection에서 담당함.
-        pictureSection.deleteSelectedPicture();
+    /**
+     * 사진 정보를 파일에서 다시 불러오고, PictureSection을 갱신하는 함수
+     * @param fileName 데이터 파일 이름
+     */
+    private void reloadPictureList(String fileName) {
+        PictureList list = new PictureList(fileName);
+        originalPictureList = new PictureList(list);
+        refreshPictureSection(list);
     }
 
     private void loadFromFile() {
-        JFileChooser jf = new JFileChooser();
+        JFileChooser jf = new JFileChooser(".");
         jf.setDialogTitle("Load from a datafile");
-        jf.setFileFilter(extfilter);
+        jf.setFileFilter(extFilter);
         if (jf.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
             String path = jf.getSelectedFile().getAbsolutePath();
-            reloadPictureSection(path);
+            reloadPictureList(path);
             JOptionPane.showMessageDialog(
-                    MainFrame.this,
-                    "Data loaded successfully.",
+                    MainFrame.this, "Data loaded successfully.",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private void saveToFile() {
-        JFileChooser jf = new JFileChooser();
+        JFileChooser jf = new JFileChooser(".");
         jf.setDialogTitle("Save to a datafile");
-        jf.setFileFilter(extfilter);
+        jf.setFileFilter(extFilter);
         if (jf.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
             String path = jf.getSelectedFile().getAbsolutePath();
             if (!path.endsWith(".data"))
                 path += ".data";
             try {
-                pictureSection.saveToFile(path);
+                pictureSection.getPictureList().saveToFile(path);
+
+                JOptionPane.showMessageDialog(
+                        MainFrame.this, "Data saved successfully.",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             catch (IOException e) {
                 JOptionPane.showMessageDialog(
-                        MainFrame.this,
-                        "Error has occurred while saving data.",
+                        MainFrame.this, "Error has occurred while saving data.",
                         "Error", JOptionPane.ERROR_MESSAGE);
-                return;
             }
-            JOptionPane.showMessageDialog(
-                    MainFrame.this,
-                    "Data saved successfully.",
-                    "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    /**
+     * 검색 결과를 적용하는 함수
+     * @param result 검색 결과
+     */
+    public void applySearchResult(PictureList result) { refreshPictureSection(result); }
 
     private class ButtonListenerClass implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             if (source == jbtShowAll)
-                reloadPictureSection();
+                showAllPictures();
             else if (source == jbtAdd)
                 new AddFrame(MainFrame.this);
-            else if (source == jbtDelete)
-                deletePicture();
+            else if (source == jbtDelete) {
+                if (!pictureSection.isPictureSelected()) {
+                    JOptionPane.showMessageDialog(
+                            MainFrame.this, "삭제할 사진을 먼저 선택하세요.",
+                            "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                deletePicture(pictureSection.getSelectedPicture());
+            }
             else if (source == jbtLoad)
                 loadFromFile();
             else if (source == jbtSave)
