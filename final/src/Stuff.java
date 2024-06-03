@@ -47,7 +47,7 @@ public class Stuff {
      * @throws IllegalArgumentException
      */
     public static ArrayList<Stuff> parse(String stuffLine) throws IllegalArgumentException {
-        ArrayList<Stuff> result = new ArrayList<Stuff>();
+        ArrayList<Stuff> result = new ArrayList<>();
 
         if (stuffLine.isEmpty()) // 비어있다면 빈 배열을 반환
             return result;
@@ -68,11 +68,11 @@ public class Stuff {
      * @return []로 둘러싸인 사물 정보들의 문자열
      */
     public static String arrayToString(ArrayList<Stuff> stuffs) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Stuff stuff : stuffs)
-            result += "[" + stuff.toString() + "] ";
+            result.append("[").append(stuff.toString()).append("] ");
 
-        return result.trim();
+        return result.toString().trim();
     }
 
     @Override

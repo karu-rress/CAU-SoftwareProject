@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 여러 사진 정보들을 관리하는 클래스
  */
-public class PictureList {
+public class PictureList implements Iterable<Picture> {
     private final ArrayList<Picture> pictures;
 
     // 기본 데이터 파일 이름은 외부에서 볼 수 있는 static final 문자열로 저장
@@ -13,10 +13,10 @@ public class PictureList {
 
     public enum FilterMethod { ALL, ANY }
 
-    public PictureList() { pictures = new ArrayList<Picture>(); }
-    public PictureList(PictureList rhs) { pictures = new ArrayList<Picture>(rhs.pictures); }
+    public PictureList() { pictures = new ArrayList<>(); }
+    public PictureList(PictureList rhs) { pictures = new ArrayList<>(rhs.pictures); }
     public PictureList(String infoFileName) {
-        pictures = new ArrayList<Picture>();
+        pictures = new ArrayList<>();
         readFile(infoFileName);
         sortByDate();
     }
@@ -185,8 +185,7 @@ public class PictureList {
      */
     public void saveToFile(String infoFileName) throws IOException {
         File file = new File(infoFileName);
-        if (!file.exists())
-            file.createNewFile();
+        file.createNewFile();
 
         PrintWriter output = new PrintWriter(file);
         for (Picture picture : pictures)
@@ -271,10 +270,14 @@ public class PictureList {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PictureList))
+        if (!(obj instanceof PictureList list))
             return false;
 
-        PictureList rhs = (PictureList)obj;
-        return pictures.equals(rhs.pictures);
+        return pictures.equals(list.pictures);
+    }
+
+    @Override
+    public Iterator<Picture> iterator() {
+        return pictures.iterator();
     }
 }

@@ -48,10 +48,10 @@ public class PictureSection extends JPanel {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PictureSection))
+        if (!(obj instanceof PictureSection ps))
             return false;
 
-        return pictureList.equals(((PictureSection)obj).pictureList);
+        return pictureList.equals(ps.pictureList);
     }
 
     private class MouseHandlerClass extends MouseAdapter {

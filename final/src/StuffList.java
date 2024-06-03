@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 사물들을 저장하고 관리하는 데이터베이스
  */
-public class StuffList {
-    private static final ArrayList<Stuff> stuffs = new ArrayList<Stuff>();
+public class StuffList implements Iterable<Stuff> {
+    private static final ArrayList<Stuff> stuffs = new ArrayList<>();
 
     private StuffList() { } // 생성자를 private으로 선언하여 객체 생성 방지
 
@@ -81,5 +82,10 @@ public class StuffList {
     public static void print() {
         for (Stuff stuff : stuffs)
             stuff.print();
+    }
+
+    @Override
+    public Iterator<Stuff> iterator() {
+        return stuffs.iterator();
     }
 }
