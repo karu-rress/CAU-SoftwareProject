@@ -29,7 +29,7 @@ public class AddFrame extends JFrame {
     private final JButton jbtInputEnd       = new JButton("OK - INPUT END");
 
     private String imagePath = null;
-    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
+    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<>();
     private final MainFrame mainFrame;
     private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Image Files (*.png, *.jpg, *.gif, *.jpeg, *.jfif, *.webp)",

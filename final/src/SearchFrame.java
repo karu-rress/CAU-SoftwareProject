@@ -197,8 +197,10 @@ public class SearchFrame extends JFrame {
         ArrayList<Tag> tags = new ArrayList<>();
         for (String token : query.split(" ")) {
             String trimmed = token.strip();
-            if (trimmed.isEmpty())        continue;
-            if (trimmed.charAt(0) == '#') trimmed = trimmed.substring(1);
+            if (trimmed.isEmpty())
+                continue;
+            if (trimmed.charAt(0) == '#')
+                trimmed = trimmed.substring(1);
             tags.add(new Tag(trimmed));
         }
 
