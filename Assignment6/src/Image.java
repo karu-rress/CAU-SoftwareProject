@@ -21,7 +21,6 @@ public class Image {
     public Image(String id, String fileName) {
         this(id, fileName, "", new ArrayList<Tag>());
     }
-
     public Image(String id, String fileName, String imageName, ArrayList<Tag> tags) {
         this.id         = id;
         this.fileName   = fileName;

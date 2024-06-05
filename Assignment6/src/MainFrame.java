@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
 
     private PictureList originalPictureList;
     private PictureSection pictureSection = new PictureSection();
-    private final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
+    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Dataset File (*.data)", "data");
 
     public MainFrame() {
@@ -72,9 +72,15 @@ public class MainFrame extends JFrame {
     /**
      * 사진을 삭제하는 함수
      */
-    private void deletePicture(Picture pic) {
+    private void deletePicture() {
+        if (!pictureSection.isPictureSelected()) {
+            JOptionPane.showMessageDialog(
+                    MainFrame.this, "삭제할 사진을 먼저 선택하세요.",
+                    "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         PictureList list = pictureSection.getPictureList();
-        list.remove(pic);
+        list.remove(pictureSection.getSelectedPicture());
         refreshPictureSection(list);
     }
 
@@ -147,15 +153,8 @@ public class MainFrame extends JFrame {
                 showAllPictures();
             else if (source == jbtAdd)
                 new AddFrame(MainFrame.this);
-            else if (source == jbtDelete) {
-                if (!pictureSection.isPictureSelected()) {
-                    JOptionPane.showMessageDialog(
-                            MainFrame.this, "삭제할 사진을 먼저 선택하세요.",
-                            "Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                deletePicture(pictureSection.getSelectedPicture());
-            }
+            else if (source == jbtDelete)
+                deletePicture();
             else if (source == jbtLoad)
                 loadFromFile();
             else if (source == jbtSave)

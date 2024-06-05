@@ -8,7 +8,7 @@ import java.util.*;
 public class PictureList {
     private final ArrayList<Picture> pictures;
 
-    // 기본 데이터 파일 이름은 외부에서 볼 수 있는 static final 문자열로 저장
+    // 기본 데이터 파일 이름은 프로그램에서 유일한 객체이므로, static final.
     public static final String DATA_FILE = "picture-normal.data";
 
     public enum FilterMethod { ALL, ANY }
@@ -93,7 +93,6 @@ public class PictureList {
         }
         return result;
     }
-
 
     /**
      * 주석을 포함하는 사진을 필터링하여 반환하는 함수

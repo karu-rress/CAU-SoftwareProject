@@ -32,8 +32,9 @@ public class PicturePanel extends JPanel {
         icon = new ImageIcon(icon.getImage().getScaledInstance(PICTURE_SIZE, PICTURE_SIZE, Image.SCALE_SMOOTH));
 
         // 물건이 있는 만큼 StuffPanel 불러오기
-        for (Stuff stuff : pic.getStuffs())
-            stuffPanels.add(new StuffPanel(stuff));
+        if (pic.getStuffs() != null)
+            for (Stuff stuff : pic.getStuffs())
+                stuffPanels.add(new StuffPanel(stuff));
 
         // North
         jlbTime.setText(picture.getTimeAsString());

@@ -44,9 +44,8 @@ public class Stuff {
      * 사물 정보가 담긴 문자열을 받아 사물 정보의 배열로 반환
      * @param stuffLine []로 둘러싸인 사물 정보들의 문자열
      * @return 사물 정보 배열
-     * @throws IllegalArgumentException
      */
-    public static ArrayList<Stuff> parse(String stuffLine) throws IllegalArgumentException {
+    public static ArrayList<Stuff> parse(String stuffLine) {
         ArrayList<Stuff> result = new ArrayList<Stuff>();
 
         if (stuffLine.isEmpty()) // 비어있다면 빈 배열을 반환

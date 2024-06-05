@@ -10,14 +10,14 @@ import java.util.ArrayList;
  * 사진 정보를 추가하는 Frame
  */
 public class AddFrame extends JFrame {
-    private final JPanel pNorth         = new JPanel(new GridLayout(1, 2));
-    private final JScrollPane spCenter  = new JScrollPane();
-    private final JPanel pStuffs        = new JPanel(new GridBagLayout());
-    private final JPanel pSouth         = new JPanel(new GridLayout(2, 1));
+    private final JPanel pNorth             = new JPanel(new GridLayout(1, 2));
+    private final JScrollPane spCenter      = new JScrollPane();
+    private final JPanel pStuffs            = new JPanel(new GridBagLayout());
+    private final JPanel pSouth             = new JPanel(new GridLayout(2, 1));
 
-    private final JLabel jlbTime     = new JLabel("Time");
-    private final JLabel jlbPicTags  = new JLabel("(Picture) Tags");
-    private final JLabel jlbComments = new JLabel("Comments");
+    private final JLabel jlbTime            = new JLabel("Time");
+    private final JLabel jlbPicTags         = new JLabel("(Picture) Tags");
+    private final JLabel jlbComments        = new JLabel("Comments");
 
     private final JTextField jtfTime        = new JTextField();
     private final JTextField jtfPicTags     = new JTextField();
@@ -27,10 +27,11 @@ public class AddFrame extends JFrame {
     private final JButton jbtMoreStuff      = new JButton("More Stuff");
     private final JButton jbtInputEnd       = new JButton("OK - INPUT END");
 
-    private String imagePath = null;
+    private String relativePath = null;
     private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
     private final MainFrame mainFrame;
-    private final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
+    
+    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Image Files (*.png, *.jpg, *.gif, *.jpeg, *.jfif, *.webp)",
             "png", "jpg", "gif", "jpeg", "jfif", "webp");
 
@@ -53,7 +54,7 @@ public class AddFrame extends JFrame {
         // Center: Type, Name, Tags
         StuffPanel stuffPanel = new StuffPanel(null, true);
         stuffPanels.add(stuffPanel);
-        pStuffs.add(stuffPanel, stuffPanel.GBC);
+        pStuffs.add(stuffPanel, StuffPanel.GBC);
         spCenter.setViewportView(pStuffs);
         spCenter.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
@@ -93,21 +94,10 @@ public class AddFrame extends JFrame {
 
         if (jf.showOpenDialog(AddFrame.this) == JFileChooser.APPROVE_OPTION) {
             String path = jf.getSelectedFile().getAbsolutePath();
-            imagePath = getRelativePath(path);
+            relativePath = Paths.get("").toAbsolutePath().relativize(Paths.get(path)).toString();
             JOptionPane.showMessageDialog(AddFrame.this,
-                    "Image loaded: " + imagePath, "Success", JOptionPane.INFORMATION_MESSAGE);
+                    "Image loaded: " + relativePath, "Success", JOptionPane.INFORMATION_MESSAGE);
         }
-    }
-
-    /**
-     * 절대 경로를 상대 경로로 변환하는 함수
-     * @param absolutePath 절대 경로
-     * @return 상대 경로
-     */
-    private static String getRelativePath(String absolutePath) {
-        Path workingPath = Paths.get("").toAbsolutePath();
-        Path pathRelative = workingPath.relativize(Paths.get(absolutePath));
-        return pathRelative.toString();
     }
 
     /**
@@ -116,7 +106,7 @@ public class AddFrame extends JFrame {
     private void addStuffPanel() {
         StuffPanel sp = new StuffPanel(null, true);
         stuffPanels.add(sp);
-        pStuffs.add(sp, sp.GBC);
+        pStuffs.add(sp, StuffPanel.GBC);
         spCenter.setViewportView(pStuffs);
     }
 
@@ -124,7 +114,7 @@ public class AddFrame extends JFrame {
      * PictureSection에 사진 패널을 추가하는 함수
      */
     private void addPicture() {
-        if (imagePath == null) {
+        if (relativePath == null) {
             JOptionPane.showMessageDialog(AddFrame.this,
                     "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -133,12 +123,17 @@ public class AddFrame extends JFrame {
         LocalDateTime time = jtfTime.getText().isEmpty() ? null
                 : LocalDateTime.parse(jtfTime.getText(), Picture.dateFormatter);
         ArrayList<Tag> tags = Tag.parse(jtfPicTags.getText());
-        ArrayList<Stuff> stuffs =  new ArrayList<Stuff>();
-        for (StuffPanel sp : stuffPanels)
-            stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
+        ArrayList<Stuff> stuffs;
+        if (stuffPanels.getFirst().isAllEmpty())
+            stuffs = null;
+        else {
+            stuffs = new ArrayList<Stuff>();
+            for (StuffPanel sp : stuffPanels)
+                stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
+        }
         String comment = jtfComments.getText();
 
-        Picture pic = new Picture(time, imagePath, stuffs, tags, comment);
+        Picture pic = new Picture(time, relativePath, stuffs, tags, comment);
         mainFrame.addPicture(pic);
         dispose();
     }
