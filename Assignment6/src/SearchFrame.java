@@ -15,13 +15,12 @@ public class SearchFrame extends JFrame {
     private final JPanel pSouth             = new JPanel();
     private final JPanel pButtons           = new JPanel();
 
-    // Label은 변하지 않으므로, static final로 선언하여 모든 instance가 공유하도록 함.
-    private static final JLabel jlbFrom          = new JLabel("From");
-    private static final JLabel jlbFromFormat    = new JLabel("(yyyy-MM-dd_HH:mm:ss)");
-    private static final JLabel jlbTo            = new JLabel("To");
-    private static final JLabel jlbTags          = new JLabel("Tags");
-    private static final JLabel jlbComments      = new JLabel("Comments");
-    private static final JLabel jlbGeneralSearch = new JLabel("General Search");
+    private final JLabel jlbFrom          = new JLabel("From");
+    private final JLabel jlbFromFormat    = new JLabel("(yyyy-MM-dd_HH:mm:ss)");
+    private final JLabel jlbTo            = new JLabel("To");
+    private final JLabel jlbTags          = new JLabel("Tags");
+    private final JLabel jlbComments      = new JLabel("Comments");
+    private final JLabel jlbGeneralSearch = new JLabel("General Search");
 
     private final JTextField jtfFrom             = new JTextField();
     private final JTextField jtfTo               = new JTextField();

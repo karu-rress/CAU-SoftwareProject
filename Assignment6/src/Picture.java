@@ -14,9 +14,8 @@ public class Picture {
     private final ArrayList<Tag>    tags;      // 태그
     private final String            comment;   // 주석
 
-    // 모든 사진 객체에서 공통적으로 사용되므로 static으로 선언
-    private static final String dateFormat = "yyyy-MM-dd_HH:mm:ss:SSS";
-    public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+    private final String dateFormat = "yyyy-MM-dd_HH:mm:ss:SSS";
+    public final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
 
     // 현재 시각으로 id와 time 생성
     public Picture(String imageFileName) {

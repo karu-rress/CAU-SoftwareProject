@@ -9,7 +9,7 @@ public class PictureList {
     private final ArrayList<Picture> pictures;
 
     // 기본 데이터 파일 이름은 외부에서 볼 수 있는 static final 문자열로 저장
-    public static final String DATA_FILE = "picture-normal.data";
+    public final String DATA_FILE = "picture-normal.data";
 
     public enum FilterMethod { ALL, ANY }
 

@@ -15,10 +15,9 @@ public class AddFrame extends JFrame {
     private final JPanel pStuffs        = new JPanel(new GridBagLayout());
     private final JPanel pSouth         = new JPanel(new GridLayout(2, 1));
 
-    // Label은 변하지 않으므로, static final로 선언하여 모든 instance가 공유하도록 함.
-    private static final JLabel jlbTime     = new JLabel("Time");
-    private static final JLabel jlbPicTags  = new JLabel("(Picture) Tags");
-    private static final JLabel jlbComments = new JLabel("Comments");
+    private final JLabel jlbTime     = new JLabel("Time");
+    private final JLabel jlbPicTags  = new JLabel("(Picture) Tags");
+    private final JLabel jlbComments = new JLabel("Comments");
 
     private final JTextField jtfTime        = new JTextField();
     private final JTextField jtfPicTags     = new JTextField();
@@ -31,7 +30,7 @@ public class AddFrame extends JFrame {
     private String imagePath = null;
     private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
     private final MainFrame mainFrame;
-    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
+    private final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Image Files (*.png, *.jpg, *.gif, *.jpeg, *.jfif, *.webp)",
             "png", "jpg", "gif", "jpeg", "jfif", "webp");
 
@@ -54,7 +53,7 @@ public class AddFrame extends JFrame {
         // Center: Type, Name, Tags
         StuffPanel stuffPanel = new StuffPanel(null, true);
         stuffPanels.add(stuffPanel);
-        pStuffs.add(stuffPanel, StuffPanel.GBC);
+        pStuffs.add(stuffPanel, stuffPanel.GBC);
         spCenter.setViewportView(pStuffs);
         spCenter.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
@@ -117,7 +116,7 @@ public class AddFrame extends JFrame {
     private void addStuffPanel() {
         StuffPanel sp = new StuffPanel(null, true);
         stuffPanels.add(sp);
-        pStuffs.add(sp, StuffPanel.GBC);
+        pStuffs.add(sp, sp.GBC);
         spCenter.setViewportView(pStuffs);
     }
 

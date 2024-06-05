@@ -21,12 +21,7 @@ public class StuffPanel extends JPanel {
     private final JTextField jtfTags = new JTextField();
 
     // GridBagConstraints는 외부에서도 사용할 수 있게 함
-    public static final GridBagConstraints GBC = new GridBagConstraints();
-    static {
-        GBC.fill = GridBagConstraints.HORIZONTAL;
-        GBC.weightx = 1;
-        GBC.gridx = 0;
-    }
+    public final GridBagConstraints GBC = new GridBagConstraints();
 
     // s == null로 editable을 추론할 수 있으나,
     // 확장성을 위해 Overloading 함.
@@ -34,6 +29,9 @@ public class StuffPanel extends JPanel {
     public StuffPanel(Stuff s, boolean editable) {
         super(new BorderLayout());
         stuff = s;
+        GBC.fill = GridBagConstraints.HORIZONTAL;
+        GBC.weightx = 1;
+        GBC.gridx = 0;
 
         // West: 레이블 생성
         for (JLabel lb : new JLabel[]{ jlbType, jlbName, jlbTags })

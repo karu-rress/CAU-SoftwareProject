@@ -136,7 +136,7 @@ public class AddFrame extends JFrame {
         ArrayList<Tag> tags = Tag.parse(jtfPicTags.getText());
         ArrayList<Stuff> stuffs =  new ArrayList<Stuff>();
         for (StuffPanel sp : stuffPanels)
-            stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
+            stuffs.add(sp.getStuff()); // TODO: Stuff가 없을 때는 아예 null 부여
         String comment = jtfComments.getText();
 
         Picture pic = new Picture(time, imagePath, stuffs, tags, comment);

@@ -10,7 +10,7 @@ public class PicturePanel extends JPanel {
     // 해당 패널이 가지고 있는 사진 정보
     private final Picture    picture;
     private       ImageIcon  icon;
-    private static final int PICTURE_SIZE = 130;
+    private final int PICTURE_SIZE = 130;
 
     private final JPanel pNorth         = new JPanel(new GridLayout(1, 2));
     private final JPanel pStuffs        = new JPanel(new GridBagLayout());

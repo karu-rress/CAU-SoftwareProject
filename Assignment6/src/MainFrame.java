@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
 
     private PictureList originalPictureList;
     private PictureSection pictureSection = new PictureSection();
-    private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
+    private final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Dataset File (*.data)", "data");
 
     public MainFrame() {
