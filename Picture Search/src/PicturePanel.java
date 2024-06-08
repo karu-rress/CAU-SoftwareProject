@@ -22,7 +22,7 @@ public class PicturePanel extends JPanel {
     private final JTextField jtfTags    = new JTextField();
     private final JTextField jtfComment = new JTextField();
 
-    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
+    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<>();
 
     public PicturePanel(Picture pic) {
         setLayout(new BorderLayout());

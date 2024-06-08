@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 여러 사진 정보들을 관리하는 클래스
  */
-public class PictureList {
+public class PictureList implements Iterable<Picture>, Printable {
     private final ArrayList<Picture> pictures;
 
     // 기본 데이터 파일 이름은 프로그램에서 유일한 객체이므로, static final.
@@ -13,10 +13,10 @@ public class PictureList {
 
     public enum FilterMethod { ALL, ANY }
 
-    public PictureList() { pictures = new ArrayList<Picture>(); }
-    public PictureList(PictureList rhs) { pictures = new ArrayList<Picture>(rhs.pictures); }
+    public PictureList() { pictures = new ArrayList<>(); }
+    public PictureList(PictureList rhs) { pictures = new ArrayList<>(rhs.pictures); }
     public PictureList(String infoFileName) {
-        pictures = new ArrayList<Picture>();
+        pictures = new ArrayList<>();
         readFile(infoFileName);
         sortByDate();
     }
@@ -182,16 +182,15 @@ public class PictureList {
      * @param infoFileName 파일 이름
      * @throws IOException 파일 입출력 예외
      */
-    public void saveToFile(String infoFileName) throws IOException {
+    public boolean saveToFile(String infoFileName) throws IOException {
         File file = new File(infoFileName);
-        if (!file.exists())
-            file.createNewFile();
+        boolean result = file.createNewFile();
 
-        PrintWriter output = new PrintWriter(file);
-        for (Picture picture : pictures)
-            output.println(picture);
-
-        output.close();
+        try (PrintWriter output = new PrintWriter(file)) {
+            for (Picture picture : pictures)
+                output.println(picture);
+        }
+        return result;
     }
 
     /**
@@ -264,16 +263,25 @@ public class PictureList {
     }
 
     private void sortByDate() {
-        // Comparator를 이용하여 각 인스턴스의 getTime을 가져와서 비교함
         pictures.sort(Comparator.comparing(Picture::getTime));
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PictureList))
-            return false;
+        if (obj instanceof PictureList pl)
+            return pictures.equals(pl.pictures);
 
-        PictureList rhs = (PictureList)obj;
-        return pictures.equals(rhs.pictures);
+        return false;
+    }
+
+    @Override
+    public Iterator<Picture> iterator() {
+        return pictures.iterator();
+    }
+
+    @Override
+    public void print() {
+        for (Picture picture : pictures)
+            picture.print();
     }
 }

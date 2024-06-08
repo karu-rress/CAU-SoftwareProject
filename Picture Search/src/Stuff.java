@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * 사물 정보를 담는 클래스
  */
-public class Stuff {
+public class Stuff implements Printable {
     // 한 번 생성된 Stuff 객체는 수정되지 않으므로, final로 선언
     private final String           id;
     private final String           type;
@@ -38,6 +38,7 @@ public class Stuff {
     public String           getName()   { return name; }
     public ArrayList<Tag>   getTags()   { return tags; }
 
+    @Override
     public void print() { System.out.println(this); }
 
     /**
@@ -46,7 +47,7 @@ public class Stuff {
      * @return 사물 정보 배열
      */
     public static ArrayList<Stuff> parse(String stuffLine) {
-        ArrayList<Stuff> result = new ArrayList<Stuff>();
+        ArrayList<Stuff> result = new ArrayList<>();
 
         if (stuffLine.isEmpty()) // 비어있다면 빈 배열을 반환
             return result;
@@ -67,11 +68,11 @@ public class Stuff {
      * @return []로 둘러싸인 사물 정보들의 문자열
      */
     public static String arrayToString(ArrayList<Stuff> stuffs) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Stuff stuff : stuffs)
-            result += "[" + stuff.toString() + "] ";
+            result.append("[").append(stuff.toString()).append("] ");
 
-        return result.trim();
+        return result.toString().trim();
     }
 
     @Override

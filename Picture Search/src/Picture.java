@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * 사진 정보를 관리하는 클래스
  */
-public class Picture {
+public class Picture implements Printable {
     // 사진 정보는 변하지 않으므로 final로 선언
     private final String            id;        // 사진 ID
     private final LocalDateTime     time;      // timestamp
@@ -20,7 +20,7 @@ public class Picture {
 
     // 현재 시각으로 id와 time 생성
     public Picture(String imageFileName) {
-        this(null, imageFileName, new ArrayList<Stuff>(), new ArrayList<Tag>(), "");
+        this(null, imageFileName, new ArrayList<>(), new ArrayList<>(), "");
     }
 
     public Picture(LocalDateTime time, String imageFileName,
@@ -59,8 +59,6 @@ public class Picture {
     public String           getTagsAsString() { return Tag.arrayToString(tags); }
     public String           getComment() { return comment; }
 
-    public void print() { System.out.println(this); }
-
     @Override
     public String toString() {
         return  "< " + id +                            " > " +
@@ -70,6 +68,9 @@ public class Picture {
                 "< " + Tag.arrayToString(tags) +       " > " +
                 "< " + comment + 					   " >";
     }
+
+    @Override
+    public void print() { System.out.println(this); }
 
     private String formatDate(LocalDateTime dt, String prefix) {
         return dt.format(DateTimeFormatter.ofPattern("'" + prefix + "'" + dateFormat));

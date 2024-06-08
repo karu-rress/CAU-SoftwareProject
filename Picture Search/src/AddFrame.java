@@ -28,7 +28,7 @@ public class AddFrame extends JFrame {
     private final JButton jbtInputEnd       = new JButton("OK - INPUT END");
 
     private String relativePath = null;
-    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
+    private final ArrayList<StuffPanel> stuffPanels = new ArrayList<>();
     private final MainFrame mainFrame;
     
     private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
@@ -127,7 +127,7 @@ public class AddFrame extends JFrame {
         if (stuffPanels.getFirst().isAllEmpty())
             stuffs = null;
         else {
-            stuffs = new ArrayList<Stuff>();
+            stuffs = new ArrayList<>();
             for (StuffPanel sp : stuffPanels)
                 stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
         }

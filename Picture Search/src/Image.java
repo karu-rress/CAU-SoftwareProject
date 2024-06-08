@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * 이미지 정보를 관리하는 클래스
  */
-public class Image {
+public class Image implements Printable {
     // 이미지 정보는 변하지 않으므로 final로 선언
     private final String            id;
     private final String            fileName;
@@ -19,7 +19,7 @@ public class Image {
         );
     }
     public Image(String id, String fileName) {
-        this(id, fileName, "", new ArrayList<Tag>());
+        this(id, fileName, "", new ArrayList<>());
     }
     public Image(String id, String fileName, String imageName, ArrayList<Tag> tags) {
         this.id         = id;
@@ -33,10 +33,11 @@ public class Image {
     public String           getImageName()  { return imageName; }
     public ArrayList<Tag>   getTags()       { return tags; }
 
-    public void print() { System.out.println(this); }
-
     @Override
     public String toString() {
         return id + ";" + fileName + ";" + imageName + ";" + Tag.arrayToString(tags);
     }
+
+    @Override
+    public void print() { System.out.println(this); }
 }

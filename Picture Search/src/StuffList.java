@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * 사물들을 저장하고 관리하는 데이터베이스
  */
 public class StuffList {
-    private static final ArrayList<Stuff> stuffs = new ArrayList<Stuff>();
+    private static final ArrayList<Stuff> stuffs = new ArrayList<>();
 
     private StuffList() { } // 생성자를 private으로 선언하여 객체 생성 방지
 
