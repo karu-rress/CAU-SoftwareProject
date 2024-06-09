@@ -45,11 +45,12 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // '닫기' 시 프로그램 종료
         setVisible(true);
 
-        // ActionListener
-        ActionListener btnListener = new ButtonListenerClass();
-        for (JButton btn : new JButton[]{
-                jbtShowAll, jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
-            btn.addActionListener(btnListener);
+        jbtShowAll.addActionListener(e -> showAllPictures());
+        jbtAdd.addActionListener(e -> new AddFrame(this));
+        jbtDelete.addActionListener(e -> deletePicture());
+        jbtLoad.addActionListener(e -> loadFromFile());
+        jbtSave.addActionListener(e -> saveToFile());
+        jbtSearch.addActionListener(e -> new SearchFrame(this));
     }
 
     public PictureSection getPictureSection() { return pictureSection; }
@@ -144,23 +145,4 @@ public class MainFrame extends JFrame {
      * @param result 검색 결과
      */
     public void applySearchResult(PictureList result) { refreshPictureSection(result); }
-
-    private class ButtonListenerClass implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object source = e.getSource();
-            if (source == jbtShowAll)
-                showAllPictures();
-            else if (source == jbtAdd)
-                new AddFrame(MainFrame.this);
-            else if (source == jbtDelete)
-                deletePicture();
-            else if (source == jbtLoad)
-                loadFromFile();
-            else if (source == jbtSave)
-                saveToFile();
-            else if (source == jbtSearch)
-                new SearchFrame(MainFrame.this);
-        }
-    }
 }

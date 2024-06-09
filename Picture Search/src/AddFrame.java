@@ -79,9 +79,9 @@ public class AddFrame extends JFrame {
         setLocationRelativeTo(this.mainFrame);
         setVisible(true);
 
-        ActionListener btnListener = new ButtonHandlerClass();
-        for (JButton btn : new JButton[]{jbtSelect, jbtMoreStuff, jbtInputEnd})
-            btn.addActionListener(btnListener);
+        jbtSelect.addActionListener(e -> selectFile());
+        jbtMoreStuff.addActionListener(e -> addStuffPanel());
+        jbtInputEnd.addActionListener(e -> addPicture());
     }
 
     /**
@@ -136,19 +136,5 @@ public class AddFrame extends JFrame {
         Picture pic = new Picture(time, relativePath, stuffs, tags, comment);
         mainFrame.addPicture(pic);
         dispose();
-    }
-
-    // 버튼 클릭시 콜백
-    private class ButtonHandlerClass implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object btn = e.getSource();
-            if (btn == jbtSelect)
-                selectFile();
-            else if (btn == jbtMoreStuff)
-                addStuffPanel();
-            else if (btn == jbtInputEnd)
-                addPicture();
-        }
     }
 }
