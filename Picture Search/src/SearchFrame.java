@@ -26,7 +26,7 @@ public class SearchFrame extends JFrame {
     private final JTextField jtfTo               = new JTextField();
     private final JTextField jtfTags             = new JTextField();
     private final JTextField jtfComments         = new JTextField();
-    private final JTextField jtfGeneralSearch    = new JTextField();
+    private final JTextField jtfGeneralSearch    = new JTextField(10);
 
     private final JButton jbtAndSearch    = new JButton("AND SEARCH");
     private final JButton jbtOrSearch     = new JButton("OR SEARCH");
@@ -56,7 +56,6 @@ public class SearchFrame extends JFrame {
 
         pRight.add(stuffPanel, StuffPanel.GBC);
 
-        jtfGeneralSearch.setColumns(10);
         pSouth.add(jlbGeneralSearch);
         pSouth.add(jtfGeneralSearch);
 
@@ -235,6 +234,8 @@ public class SearchFrame extends JFrame {
             }
             else if (btn == jbtClose)
                 dispose();
+            else
+                assert false : "Unknown button";
         }
     }
 }
