@@ -1,4 +1,4 @@
-# CAU-Software Project (JAVA)
+# [CAU] Software Project (JAVA)
 중앙대학교 소프트웨어학부 2학년 전공선택 '소프트웨어프로젝트' 과제 파일입니다.
 
 **과목 정보**
