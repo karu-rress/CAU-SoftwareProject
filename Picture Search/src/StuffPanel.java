@@ -70,5 +70,4 @@ public class StuffPanel extends JPanel {
     public String           getStuffType()   { return jtfType.getText(); }
     public String           getStuffName()   { return jtfName.getText(); }
     public ArrayList<Tag>   getStuffTags()   { return Tag.parse(jtfTags.getText()); }
-    public String           getStuffTagsAsString() { return jtfTags.getText(); }
 }

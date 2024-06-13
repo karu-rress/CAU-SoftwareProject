@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -5,7 +6,7 @@ import java.util.ArrayList;
 /**
  * 사진 정보를 관리하는 클래스
  */
-public class Picture implements Printable {
+public class Picture implements Printable, Serializable {
     // 사진 정보는 변하지 않으므로 final로 선언
     private final String            id;        // 사진 ID
     private final LocalDateTime     time;      // timestamp
@@ -17,11 +18,6 @@ public class Picture implements Printable {
     // 프로그램 전체를 통틀어 유일하게 하나의 객체만 사용되므로, static.
     private static final String dateFormat = "yyyy-MM-dd_HH:mm:ss:SSS";
     public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
-
-    // 현재 시각으로 id와 time 생성
-    public Picture(String imageFileName) {
-        this(null, imageFileName, new ArrayList<>(), new ArrayList<>(), "");
-    }
 
     public Picture(LocalDateTime time, String imageFileName,
                    ArrayList<Stuff> stuffs, ArrayList<Tag> tags, String comment) {
@@ -36,19 +32,6 @@ public class Picture implements Printable {
         this.comment    = comment;
     }
 
-    // 파일에서 읽은 정보로 객체 생성
-    public Picture(String[] infoFields) {
-        id          = infoFields[0];
-        time        = LocalDateTime.parse(infoFields[1], dateFormatter);
-        imageInfo   = new Image(infoFields[2]);
-        stuffs      = Stuff.parse(infoFields[3]);
-        tags        = Tag.parse(infoFields[4]);
-        comment     = infoFields[5];
-
-        // 파일에서 읽어왔으니 StuffList에 추가
-        StuffList.add(stuffs);
-    }
-
     // Getter
     public String           getId() { return id; }
     public LocalDateTime    getTime() { return time; }
@@ -58,16 +41,6 @@ public class Picture implements Printable {
     public ArrayList<Tag>   getTags() { return tags; }
     public String           getTagsAsString() { return Tag.arrayToString(tags); }
     public String           getComment() { return comment; }
-
-    @Override
-    public String toString() {
-        return  "< " + id +                            " > " +
-                "< " + getTimeAsString() +             " > " +
-                "< " + imageInfo +                     " > " +
-                "< " + Stuff.arrayToString(stuffs) +   " > " +
-                "< " + Tag.arrayToString(tags) +       " > " +
-                "< " + comment + 					   " >";
-    }
 
     @Override
     public void print() { System.out.println(this); }

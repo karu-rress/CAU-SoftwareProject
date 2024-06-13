@@ -32,7 +32,7 @@ public class SearchFrame extends JFrame {
     private final JButton jbtOrSearch     = new JButton("OR SEARCH");
     private final JButton jbtClose        = new JButton("CLOSE");
 
-    private final StuffPanel stuffPanel = new StuffPanel(null, true);;
+    private final StuffPanel stuffPanel = new StuffPanel(null, true);
     private final MainFrame mainFrame;
 
     private enum SearchMethod { AND, OR }
@@ -192,7 +192,7 @@ public class SearchFrame extends JFrame {
         PictureList list = mainFrame.getPictureSection().getPictureList();
         PictureList temp = new PictureList();
 
-        ArrayList<Tag> tags = new ArrayList<Tag>();
+        ArrayList<Tag> tags = new ArrayList<>();
         for (String token : query.split(" ")) {
             String trimmed = token.strip();
             if (trimmed.isEmpty())        continue;

@@ -1,23 +1,16 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * 이미지 정보를 관리하는 클래스
  */
-public class Image implements Printable {
+public class Image implements Printable, Serializable {
     // 이미지 정보는 변하지 않으므로 final로 선언
     private final String            id;
     private final String            fileName;
     private final String            imageName;
     private final ArrayList<Tag>    tags;
 
-    public Image(String infoLine) {
-        this(
-            infoLine.split(";", -1)[0].trim(),
-            infoLine.split(";", -1)[1].trim(),
-            infoLine.split(";", -1)[2].trim(),
-            Tag.parse(infoLine.split(";", -1)[3])
-        );
-    }
     public Image(String id, String fileName) {
         this(id, fileName, "", new ArrayList<>());
     }

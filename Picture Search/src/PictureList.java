@@ -5,11 +5,11 @@ import java.util.*;
 /**
  * 여러 사진 정보들을 관리하는 클래스
  */
-public class PictureList implements Iterable<Picture>, Printable {
+public class PictureList implements Iterable<Picture>, Printable, Serializable {
     private final ArrayList<Picture> pictures;
 
     // 기본 데이터 파일 이름은 프로그램에서 유일한 객체이므로, static final.
-    public static final String DATA_FILE = "picture-normal.data";
+    public static final String DATA_FILE = "picture-normal-bin.data";
 
     public enum FilterMethod { ALL, ANY }
 
@@ -181,14 +181,14 @@ public class PictureList implements Iterable<Picture>, Printable {
      * 사진 정보를 파일로 저장하는 함수
      * @param infoFileName 파일 이름
      * @throws IOException 파일 입출력 예외
+     * @return {@code true} if the named file does not exist and was successfully created; {@code false} if the named file already exists
      */
     public boolean saveToFile(String infoFileName) throws IOException {
         File file = new File(infoFileName);
         boolean result = file.createNewFile();
 
-        try (PrintWriter output = new PrintWriter(file)) {
-            for (Picture picture : pictures)
-                output.println(picture);
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file))) {
+            output.writeObject(pictures);
         }
         return result;
     }
@@ -198,55 +198,16 @@ public class PictureList implements Iterable<Picture>, Printable {
      * @param infoFileName 파일 이름
      */
     private void readFile(String infoFileName) {
-        try (Scanner input = new Scanner(new File(infoFileName))) {
-            int current = 0, success = 0;
-            while (input.hasNext()) {
-                try {
-                    String line = input.nextLine().strip();
-                    current++;
+        File file = new File(infoFileName);
+        assert file.exists() : "File does not exist!";
 
-                    if (!line.startsWith("//")) {
-                        String[] array = processLine(line);
-                        add(new Picture(trimArrayElements(array)));
-                        success++;
-                    }
-                }
-                catch (Exception e) {
-                    System.err.println("Error on line #" + current + ": " + e.getMessage());
-                }
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+            for (Object item : (ArrayList<?>)input.readObject()) {
+                pictures.add((Picture)item);
             }
-            System.out.println("Successfully loaded " + success + " items.");
-        }
-        catch (FileNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error has occurred while reading file.");
         }
-    }
-
-    /**
-     * 파일의 한 줄을 처리하는 함수
-     * @param line 한 줄
-     * @return 사진 정보 배열
-     * @throws IllegalArgumentException 배열 길이가 6이 아닌 경우
-     */
-    private String[] processLine(String line) throws IllegalArgumentException {
-        String[] array = line.substring(1, line.length() - 1).split("> <", -1);
-        if (array.length != 6)
-            throw new IllegalArgumentException("Array length is not 6.");
-
-        return array;
-    }
-
-    /**
-     * 배열의 각 요소의 앞뒤 공백을 제거하는 함수
-     * @param array 파싱된 요소
-     * @return 공백이 제거된 요소
-     */
-    private String[] trimArrayElements(String[] array) {
-        String[] trimArray = new String[array.length];
-        for (int i = 0; i < array.length; i++)
-            trimArray[i] = array[i].trim();
-
-        return trimArray;
     }
 
     /**

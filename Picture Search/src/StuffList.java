@@ -77,9 +77,4 @@ public class StuffList {
      * @return 사물 정보의 수
      */
     public static int size() { return stuffs.size(); }
-
-    public static void print() {
-        for (Stuff stuff : stuffs)
-            stuff.print();
-    }
 }

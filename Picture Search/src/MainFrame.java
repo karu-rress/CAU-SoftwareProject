@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 
 /**
@@ -45,12 +44,12 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // '닫기' 시 프로그램 종료
         setVisible(true);
 
-        jbtShowAll.addActionListener(e -> showAllPictures());
-        jbtAdd.addActionListener(e -> new AddFrame(this));
-        jbtDelete.addActionListener(e -> deletePicture());
-        jbtLoad.addActionListener(e -> loadFromFile());
-        jbtSave.addActionListener(e -> saveToFile());
-        jbtSearch.addActionListener(e -> new SearchFrame(this));
+        jbtShowAll.addActionListener(_ -> showAllPictures());
+        jbtAdd.addActionListener(_ -> new AddFrame(this));
+        jbtDelete.addActionListener(_ -> deletePicture());
+        jbtLoad.addActionListener(_ -> loadFromFile());
+        jbtSave.addActionListener(_ -> saveToFile());
+        jbtSearch.addActionListener(_ -> new SearchFrame(this));
     }
 
     public PictureSection getPictureSection() { return pictureSection; }
@@ -136,6 +135,7 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(
                         MainFrame.this, "Error has occurred while saving data.",
                         "Error", JOptionPane.ERROR_MESSAGE);
+                System.err.println(e.getMessage());
             }
         }
     }

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -5,7 +6,7 @@ import java.util.ArrayList;
  *
  * @param name 태그 이름
  */
-public record Tag(String name) {
+public record Tag(String name) implements Serializable {
 
     /**
      * 태그 문자열을 파싱하여 태그 배열을 반환함
@@ -34,6 +35,11 @@ public record Tag(String name) {
      * @throws IllegalArgumentException {@code tags}가 {@code null}인 경우
      */
     public static String arrayToString(ArrayList<Tag> tags) throws IllegalArgumentException {
+        /*
+         * String listString = list.stream().map(Object::toString)
+         *                         .collect(Collectors.joining(", "));
+         */
+
         if (tags == null)
             throw new IllegalArgumentException("tags is null");
 
