@@ -264,6 +264,15 @@ public class PictureList implements Iterable<Picture>, Printable {
 
     private void sortByDate() {
         pictures.sort(Comparator.comparing(Picture::getTime));
+        assert isSorted() : "Sorting failed!";
+    }
+
+    private boolean isSorted() {
+        for (int i = 1; i < pictures.size(); i++) {
+            if (pictures.get(i - 1).getTime().isAfter(pictures.get(i).getTime()))
+                return false;
+        }
+        return true;
     }
 
     @Override
