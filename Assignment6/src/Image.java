@@ -19,7 +19,7 @@ public class Image {
         );
     }
     public Image(String id, String fileName) {
-        this(id, fileName, "", new ArrayList<Tag>());
+        this(id, fileName, "", new ArrayList<>());
     }
     public Image(String id, String fileName, String imageName, ArrayList<Tag> tags) {
         this.id         = id;
@@ -37,6 +37,6 @@ public class Image {
 
     @Override
     public String toString() {
-        return id + ";" + fileName + ";" + imageName + ";" + Tag.arrayToString(tags);
+        return STR."\{id};\{fileName};\{imageName};\{Tag.arrayToString(tags)}";
     }
 }

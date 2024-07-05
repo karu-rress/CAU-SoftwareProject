@@ -20,7 +20,7 @@ public class Tag {
         if (tagLine == null)
             throw new IllegalArgumentException("tagLine is null");
 
-        ArrayList<Tag> result = new ArrayList<Tag>();
+        ArrayList<Tag> result = new ArrayList<>();
         if (!tagLine.isEmpty()) {
             for (String token : tagLine.split(" "))
                 result.add(new Tag(token.strip().substring(1)));
@@ -38,20 +38,20 @@ public class Tag {
         if (tags == null)
             throw new IllegalArgumentException("tags is null");
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Tag tag : tags)
-            result += tag.toString() + " ";
+            result.append(STR."\{tag.toString()} ");
 
-        return result.strip();
+        return result.toString().strip();
     }
 
     @Override
-    public String toString() { return "#" + name; }
+    public String toString() { return STR."#\{name}"; }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Tag)
-            return name.equals(((Tag)obj).name);
+        if (obj instanceof Tag tag)
+            return name.equals(tag.name);
 
         return false;
     }

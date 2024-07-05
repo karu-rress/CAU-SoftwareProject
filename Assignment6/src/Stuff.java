@@ -15,7 +15,7 @@ public class Stuff {
     }
     public Stuff(String id, String type, String name, ArrayList<Tag> tags) throws IllegalArgumentException {
         if (!id.matches("\\d+")) // 숫자만 포함되었는지 검사
-            throw new IllegalArgumentException("ID format is wrong. ID: " + id);
+            throw new IllegalArgumentException(STR."ID format is wrong. ID: \{id}");
 
         this.id     = id;
         this.type   = type;
@@ -46,7 +46,7 @@ public class Stuff {
      * @return 사물 정보 배열
      */
     public static ArrayList<Stuff> parse(String stuffLine) {
-        ArrayList<Stuff> result = new ArrayList<Stuff>();
+        ArrayList<Stuff> result = new ArrayList<>();
 
         if (stuffLine.isEmpty()) // 비어있다면 빈 배열을 반환
             return result;
@@ -67,15 +67,15 @@ public class Stuff {
      * @return []로 둘러싸인 사물 정보들의 문자열
      */
     public static String arrayToString(ArrayList<Stuff> stuffs) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Stuff stuff : stuffs)
-            result += "[" + stuff.toString() + "] ";
+            result.append(STR."[\{stuff.toString()}] ");
 
-        return result.trim();
+        return result.toString().trim();
     }
 
     @Override
     public String toString() {
-        return id + "; " + type + "; " + name + "; " + Tag.arrayToString(tags);
+        return STR."\{id}; \{type}; \{name}; \{Tag.arrayToString(tags)}";
     }
 }

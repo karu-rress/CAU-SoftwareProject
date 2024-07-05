@@ -13,10 +13,10 @@ public class PictureList {
 
     public enum FilterMethod { ALL, ANY }
 
-    public PictureList() { pictures = new ArrayList<Picture>(); }
-    public PictureList(PictureList rhs) { pictures = new ArrayList<Picture>(rhs.pictures); }
+    public PictureList() { pictures = new ArrayList<>(); }
+    public PictureList(PictureList rhs) { pictures = new ArrayList<>(rhs.pictures); }
     public PictureList(String infoFileName) {
-        pictures = new ArrayList<Picture>();
+        pictures = new ArrayList<>();
         readFile(infoFileName);
         sortByDate();
     }
@@ -33,7 +33,7 @@ public class PictureList {
      */
     public void add(Picture pic) throws IllegalArgumentException {
         if (idExists(pic))
-            throw new IllegalArgumentException(pic.getId() + ": ID already exists!");
+            throw new IllegalArgumentException(STR."\{pic.getId()}: ID already exists!");
 
         pictures.add(pic);
         sortByDate();
@@ -213,10 +213,10 @@ public class PictureList {
                     }
                 }
                 catch (Exception e) {
-                    System.err.println("Error on line #" + current + ": " + e.getMessage());
+                    System.err.println(STR."Error on line #\{current}: \{e.getMessage()}");
                 }
             }
-            System.out.println("Successfully loaded " + success + " items.");
+            System.out.println(STR."Successfully loaded \{success} items.");
         }
         catch (FileNotFoundException e) {
             System.err.println("Error has occurred while reading file.");
@@ -270,10 +270,10 @@ public class PictureList {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PictureList))
-            return false;
+        if (obj instanceof PictureList rhs)
+            return pictures.equals(rhs.pictures);
 
-        PictureList rhs = (PictureList)obj;
-        return pictures.equals(rhs.pictures);
+        return false;
+
     }
 }

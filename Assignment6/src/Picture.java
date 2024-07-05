@@ -20,7 +20,7 @@ public class Picture {
 
     // 현재 시각으로 id와 time 생성
     public Picture(String imageFileName) {
-        this(null, imageFileName, new ArrayList<Stuff>(), new ArrayList<Tag>(), "");
+        this(null, imageFileName, new ArrayList<>(), new ArrayList<>(), "");
     }
 
     public Picture(LocalDateTime time, String imageFileName,
@@ -63,15 +63,10 @@ public class Picture {
 
     @Override
     public String toString() {
-        return  "< " + id +                            " > " +
-                "< " + getTimeAsString() +             " > " +
-                "< " + imageInfo +                     " > " +
-                "< " + Stuff.arrayToString(stuffs) +   " > " +
-                "< " + Tag.arrayToString(tags) +       " > " +
-                "< " + comment + 					   " >";
+        return STR."< \{id} > < \{getTimeAsString()} > < \{imageInfo} > < \{Stuff.arrayToString(stuffs)} > < \{Tag.arrayToString(tags)} > < \{comment} >";
     }
 
     private String formatDate(LocalDateTime dt, String prefix) {
-        return dt.format(DateTimeFormatter.ofPattern("'" + prefix + "'" + dateFormat));
+        return dt.format(DateTimeFormatter.ofPattern(STR."'\{prefix}'\{dateFormat}"));
     }
 }

@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class PictureSection extends JPanel {
     private PictureList             pictureList;
-    private ArrayList<PicturePanel> picturePanels = new ArrayList<PicturePanel>();
+    private ArrayList<PicturePanel> picturePanels = new ArrayList<>();
     private PicturePanel            selected = null; // 현재 선택된 PicturePanel
 
     public PictureSection() {
@@ -48,10 +48,10 @@ public class PictureSection extends JPanel {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PictureSection))
-            return false;
+        if (obj instanceof PictureSection ps)
+            return pictureList.equals(ps.pictureList);
 
-        return pictureList.equals(((PictureSection)obj).pictureList);
+        return false;
     }
 
     private class MouseHandlerClass extends MouseAdapter {
