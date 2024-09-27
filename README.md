@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th colspan="4">과목 정보</th>
+    <th colspan="4">&lt;소프트웨어 프로젝트> 과목 정보</th>
   </tr>
   <tr>
     <td><b>개설대학</b></td><td>소프트웨어대학</td>
