@@ -1,40 +1,59 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * AddFrame.java
+ *
+ * Provides a separate window containing
+ * input fields for picture information.
+ *
+ */
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * 사진 정보를 추가하는 Frame
+ * Adds Picture information through a separate window.
  */
 public class AddFrame extends JFrame {
-    private final JPanel pNorth             = new JPanel(new GridLayout(1, 2));
-    private final JScrollPane spCenter      = new JScrollPane();
-    private final JPanel pStuffs            = new JPanel(new GridBagLayout());
-    private final JPanel pSouth             = new JPanel(new GridLayout(2, 1));
+    private final JPanel pNorth = new JPanel(new GridLayout(1, 2));
+    private final JScrollPane spCenter = new JScrollPane();
+    private final JPanel pStuffs = new JPanel(new GridBagLayout());
+    private final JPanel pSouth = new JPanel(new GridLayout(2, 1));
 
-    private final JLabel jlbTime            = new JLabel("Time");
-    private final JLabel jlbPicTags         = new JLabel("(Picture) Tags");
-    private final JLabel jlbComments        = new JLabel("Comments");
+    private final JLabel jlbTime = new JLabel("Time");
+    private final JLabel jlbPicTags = new JLabel("(Picture) Tags");
+    private final JLabel jlbComments = new JLabel("Comments");
 
-    private final JTextField jtfTime        = new JTextField();
-    private final JTextField jtfPicTags     = new JTextField();
-    private final JTextField jtfComments    = new JTextField();
+    private final JTextField jtfTime = new JTextField();
+    private final JTextField jtfPicTags = new JTextField();
+    private final JTextField jtfComments = new JTextField();
 
-    private final JButton jbtSelect         = new JButton("Select Image File");
-    private final JButton jbtMoreStuff      = new JButton("More Stuff");
-    private final JButton jbtInputEnd       = new JButton("OK - INPUT END");
+    private final JButton jbtSelect = new JButton("Select Image File");
+    private final JButton jbtMoreStuff = new JButton("More Stuff");
+    private final JButton jbtInputEnd = new JButton("OK - INPUT END");
 
     private String relativePath = null;
     private final ArrayList<StuffPanel> stuffPanels = new ArrayList<>();
     private final MainFrame mainFrame;
-    
+
     private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Image Files (*.png, *.jpg, *.gif, *.jpeg, *.jfif, *.webp)",
             "png", "jpg", "gif", "jpeg", "jfif", "webp");
 
+    /**
+     * Constructs an AddFrame window for inputting picture information.
+     * The window includes fields for time, picture tags, comments,
+     * and buttons for selecting an image file and confirming input.
+     *
+     * @param mainFrame The main application frame to which the picture will be
+     *                  added.
+     */
     public AddFrame(MainFrame mainFrame) {
         super("Add a Picture");
         setLayout(new BorderLayout());
@@ -85,7 +104,8 @@ public class AddFrame extends JFrame {
     }
 
     /**
-     * 이미지 파일을 선택하는 함수
+     * Selects an image file using a file chooser dialog
+     * and updates the relative path.
      */
     private void selectFile() {
         JFileChooser jf = new JFileChooser(".");
@@ -101,17 +121,18 @@ public class AddFrame extends JFrame {
     }
 
     /**
-     * 사물 패널을 추가하는 함수
+     * Adds a new StuffPanel to the AddFrame
+     * for inputting additional stuff information.
      */
     private void addStuffPanel() {
-        StuffPanel sp = new StuffPanel(null, true);
+        var sp = new StuffPanel(null, true);
         stuffPanels.add(sp);
         pStuffs.add(sp, StuffPanel.GBC);
         spCenter.setViewportView(pStuffs);
     }
 
     /**
-     * PictureSection에 사진 패널을 추가하는 함수
+     * Adds a picture to the PictureSection based on the input fields.
      */
     private void addPicture() {
         if (relativePath == null) {
@@ -120,20 +141,22 @@ public class AddFrame extends JFrame {
             return;
         }
 
-        LocalDateTime time = jtfTime.getText().isEmpty() ? null
+        var time = jtfTime.getText().isEmpty() ? null
                 : LocalDateTime.parse(jtfTime.getText(), Picture.dateFormatter);
-        ArrayList<Tag> tags = Tag.parse(jtfPicTags.getText());
+        var tags = Tag.parse(jtfPicTags.getText());
         ArrayList<Stuff> stuffs;
         if (stuffPanels.getFirst().isAllEmpty())
             stuffs = null;
         else {
             stuffs = new ArrayList<>();
             for (StuffPanel sp : stuffPanels)
-                stuffs.add(sp.getStuff()); // 이미 존재하는 사물 정보라면 동일한 ID, 아니라면 신규 ID 부여
+                // If exisiting stuff information, use the same ID
+                // otherwise, assign a new ID
+                stuffs.add(sp.getStuff());
         }
         String comment = jtfComments.getText();
 
-        Picture pic = new Picture(time, relativePath, stuffs, tags, comment);
+        var pic = new Picture(time, relativePath, stuffs, tags, comment);
         mainFrame.addPicture(pic);
         dispose();
     }
