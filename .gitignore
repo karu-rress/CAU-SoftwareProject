@@ -1,8 +1,11 @@
-# 보고서 파일
+# Report fils
 *.hwp
 *.pdf
 
+# Assignment notice
 notice/
 
-# 출력 파일
+# Output files
+out/
+*.class
 *.output
