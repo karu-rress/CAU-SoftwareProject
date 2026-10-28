@@ -8,7 +8,7 @@ This repository contains assignments for the **[49148] Software Project** course
 
 | Field | Details |
 |---|---|
-| **Course Title** | Software Project (소프트웨어프로젝트) |
+| **Course Title** | **Software Project**<br>소프트웨어프로젝트 |
 | **Institution** | Chung-Ang University |
 | **Department** | School of Computer Science and Engineering |
 | **Semester** | Spring 2024 |
