@@ -1,3 +1,16 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * MainFrame.java
+ *
+ * The main application window. Provides buttons
+ * for displaying all pictures, adding and deleting
+ * pictures, loading and saving data, and searching.
+ *
+ */
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -5,24 +18,31 @@ import java.awt.event.*;
 import java.io.IOException;
 
 /**
- * 메인 프레임 (메인 화면)
+ * Main application window for managing pictures.
+ * Provides buttons for displaying all pictures,
+ * adding and deleting pictures, loading and saving data,
+ * and searching.
  */
 public class MainFrame extends JFrame {
-    private final JPanel      pEast    = new JPanel(new GridLayout(5, 1));
+    private final JPanel pEast = new JPanel(new GridLayout(5, 1));
     private final JScrollPane spCenter = new JScrollPane();
 
-    private final JButton jbtShowAll   = new JButton("Show All Pictures");
-    private final JButton jbtAdd       = new JButton("ADD");
-    private final JButton jbtDelete    = new JButton("DELETE");
-    private final JButton jbtLoad      = new JButton("LOAD");
-    private final JButton jbtSave      = new JButton("SAVE");
-    private final JButton jbtSearch    = new JButton("SEARCH");
+    private final JButton jbtShowAll = new JButton("Show All Pictures");
+    private final JButton jbtAdd = new JButton("ADD");
+    private final JButton jbtDelete = new JButton("DELETE");
+    private final JButton jbtLoad = new JButton("LOAD");
+    private final JButton jbtSave = new JButton("SAVE");
+    private final JButton jbtSearch = new JButton("SEARCH");
 
     private PictureList originalPictureList;
     private PictureSection pictureSection = new PictureSection();
     private static final FileNameExtensionFilter extFilter = new FileNameExtensionFilter(
             "Dataset File (*.data)", "data");
 
+    /**
+     * Constructs the main application window with
+     * buttons for various operations.
+     */
     public MainFrame() {
         super("Simple Picture Search");
         setLayout(new BorderLayout());
@@ -31,8 +51,8 @@ public class MainFrame extends JFrame {
         // Center: PictureSection
         spCenter.setViewportView(pictureSection);
 
-        // East: 버튼들
-        for (JButton bt : new JButton[]{ jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
+        // East: buttons for various operations
+        for (JButton bt : new JButton[] { jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
             pEast.add(bt);
 
         add(jbtShowAll, BorderLayout.NORTH);
@@ -41,28 +61,34 @@ public class MainFrame extends JFrame {
 
         pack();
         setSize(600, 800);
-        setLocationRelativeTo(null);                // 화면 중앙에 생성
-        setDefaultCloseOperation(EXIT_ON_CLOSE);    // '닫기' 시 프로그램 종료
+        setLocationRelativeTo(null); // Center the window on the screen
+        setDefaultCloseOperation(EXIT_ON_CLOSE); // If closed, terminate the program
         setVisible(true);
 
         // ActionListener
         ActionListener btnListener = new ButtonListenerClass();
-        for (JButton btn : new JButton[]{
+        for (JButton btn : new JButton[] {
                 jbtShowAll, jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
             btn.addActionListener(btnListener);
     }
 
-    public PictureSection getPictureSection() { return pictureSection; }
+    public PictureSection getPictureSection() {
+        return pictureSection;
+    }
 
     /**
-     * 검색 결과를 무시하고, 모든 사진을 보여주는 함수
+     * Ignore the search result and show all pictures.
      */
     private void showAllPictures() {
         pictureSection = new PictureSection(originalPictureList);
         spCenter.setViewportView(pictureSection);
     }
 
-    // 추후 이걸 callback으로 구현해도 좋을 것 같다.
+    /**
+     * Add a picture to the current picture list.
+     * 
+     * @param pic The picture to add.
+     */
     public void addPicture(Picture pic) {
         PictureList list = pictureSection.getPictureList();
         list.add(pic);
@@ -70,12 +96,12 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * 사진을 삭제하는 함수
+     * Delete the selected picture from the current picture list.
      */
     private void deletePicture() {
         if (!pictureSection.isPictureSelected()) {
             JOptionPane.showMessageDialog(
-                    MainFrame.this, "삭제할 사진을 먼저 선택하세요.",
+                    MainFrame.this, "No picture selected for deletion.",
                     "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -85,8 +111,9 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * PictureSection을 갱신하는 함수
-     * @param list 사진 정보가 담긴 리스트
+     * Refresh the PictureSection with the updated picture list.
+     * 
+     * @param list The updated picture list.
      */
     private void refreshPictureSection(PictureList list) {
         pictureSection = new PictureSection(list);
@@ -94,8 +121,9 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * 사진 정보를 파일에서 다시 불러오고, PictureSection을 갱신하는 함수
-     * @param fileName 데이터 파일 이름
+     * Reload the picture list from a file and refresh the PictureSection.
+     * 
+     * @param fileName The name of the data file.
      */
     private void reloadPictureList(String fileName) {
         PictureList list = new PictureList(fileName);
@@ -103,8 +131,11 @@ public class MainFrame extends JFrame {
         refreshPictureSection(list);
     }
 
+    /**
+     * Load picture data from a file and refresh the PictureSection.
+     */
     private void loadFromFile() {
-        JFileChooser jf = new JFileChooser(".");
+        var jf = new JFileChooser(".");
         jf.setDialogTitle("Load from a datafile");
         jf.setFileFilter(extFilter);
         if (jf.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
@@ -116,8 +147,11 @@ public class MainFrame extends JFrame {
         }
     }
 
+    /**
+     * Save the current picture list to a file and refresh the PictureSection.
+     */
     private void saveToFile() {
-        JFileChooser jf = new JFileChooser(".");
+        var jf = new JFileChooser(".");
         jf.setDialogTitle("Save to a datafile");
         jf.setFileFilter(extFilter);
         if (jf.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
@@ -130,8 +164,7 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(
                         MainFrame.this, "Data saved successfully.",
                         "Success", JOptionPane.INFORMATION_MESSAGE);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(
                         MainFrame.this, "Error has occurred while saving data.",
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -140,10 +173,14 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * 검색 결과를 적용하는 함수
-     * @param result 검색 결과
+     * Apply the search result to the PictureSection,
+     * replacing the current picture list.
+     * 
+     * @param result PictureList containing the search result
      */
-    public void applySearchResult(PictureList result) { refreshPictureSection(result); }
+    public void applySearchResult(PictureList result) {
+        refreshPictureSection(result);
+    }
 
     private class ButtonListenerClass implements ActionListener {
         @Override
