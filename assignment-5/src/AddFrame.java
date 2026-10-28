@@ -1,3 +1,15 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * AddFrame.java
+ *
+ * Provides a separate window containing
+ * input fields for picture information.
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -24,6 +36,11 @@ public class AddFrame extends JFrame {
     private final JButton jbtMoreStuff = new JButton("More Stuff");
     private final JButton jbtInputEnd = new JButton("OK - INPUT END");
 
+    /**
+     * Constructs an AddFrame window for inputting picture information.
+     * The window includes fields for time, picture tags, type, name, tags,
+     * comments, and buttons for selecting an image file and confirming input.
+     */
     public AddFrame() {
         super("Add a Picture");
         setLayout(new BorderLayout());
@@ -42,7 +59,7 @@ public class AddFrame extends JFrame {
         // Center: Type, Name, Tags
         JPanel outer = new JPanel(new BorderLayout());
         JPanel[] c_pns = new JPanel[2];
-        JComponent[][] c_cps = {{ jlbType, jlbName, jlbTags }, { jtfType, jtfName, jtfTags }};
+        JComponent[][] c_cps = { { jlbType, jlbName, jlbTags }, { jtfType, jtfName, jtfTags } };
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;

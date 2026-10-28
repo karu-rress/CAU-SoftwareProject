@@ -1,3 +1,16 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * MainFrame.java
+ *
+ * The main application window. Provides buttons
+ * for displaying all pictures, adding and deleting
+ * pictures, loading and saving data, and searching.
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +27,10 @@ public class MainFrame extends JFrame {
     private final JButton jbtSearch = new JButton("SEARCH");
     private PictureSection pictureSection = new PictureSection();
 
+    /**
+     * Constructs the main application window with
+     * buttons for various operations.
+     */
     public MainFrame() {
         super("Simple Picture Search");
         setLayout(new BorderLayout());
@@ -22,7 +39,7 @@ public class MainFrame extends JFrame {
         spCenter.setViewportView(pictureSection);
 
         // East
-        for (JButton bt : new JButton[]{ jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
+        for (JButton bt : new JButton[] { jbtAdd, jbtDelete, jbtLoad, jbtSave, jbtSearch })
             pEast.add(bt);
 
         add(jbtShowAll, BorderLayout.NORTH);
@@ -43,33 +60,68 @@ public class MainFrame extends JFrame {
         jbtSearch.addActionListener(new SearchListenerClass());
     }
 
+    /**
+     * Resets the picture section to display all pictures.
+     */
     private void resetPictureSection() {
         pictureSection = new PictureSection();
         spCenter.setViewportView(pictureSection);
     }
 
+    /**
+     * ActionListener for the "Show All Pictures" button.
+     */
     private class ShowAllListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) { resetPictureSection(); }
+        public void actionPerformed(ActionEvent e) {
+            resetPictureSection();
+        }
     }
+
+    /**
+     * ActionListener for the "ADD" button.
+     */
     private class AddListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) { new AddFrame(); }
+        public void actionPerformed(ActionEvent e) {
+            new AddFrame();
+        }
     }
+
+    /**
+     * ActionListener for the "DELETE" button.
+     */
     private class DeleteListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) { }
+        public void actionPerformed(ActionEvent e) {
+        }
     }
+
+    /**
+     * ActionListener for the "LOAD" button.
+     */
     private class LoadListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) { }
+        public void actionPerformed(ActionEvent e) {
+        }
     }
+
+    /**
+     * ActionListener for the "SAVE" button.
+     */
     private class SaveListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {  }
+        public void actionPerformed(ActionEvent e) {
+        }
     }
+
+    /**
+     * ActionListener for the "SEARCH" button.
+     */
     private class SearchListenerClass implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) { new SearchFrame(); }
+        public void actionPerformed(ActionEvent e) {
+            new SearchFrame();
+        }
     }
 }

@@ -1,3 +1,15 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * SearchFrame.java
+ *
+ * Provides a separate window containing
+ * time-based and keyword-based search fields.
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,26 +44,29 @@ public class SearchFrame extends JFrame {
     private final JButton jbtOrSearch = new JButton("OR SEARCH");
     private final JButton jbtClose = new JButton("CLOSE");
 
+    /**
+     * Constructs a SearchFrame.
+     */
     public SearchFrame() {
         super("Search Picture");
         setLayout(new BorderLayout());
 
         // Time Search
         jpnTimeSearch.setBorder(BorderFactory.createTitledBorder("Time Search"));
-        JComponent[] cmps = {jlbFrom, jtfFrom, jlbFromFormat, jlbTo, jtfTo};
+        JComponent[] cmps = { jlbFrom, jtfFrom, jlbFromFormat, jlbTo, jtfTo };
         for (JComponent cp : cmps)
             jpnTimeSearch.add(cp);
 
         // Keyword Search
         jpnKeywordSearch.setBorder(BorderFactory.createTitledBorder("Keyword Search"));
-        cmps = new JComponent[]{jlbTags, jtfTags, jlbComments, jtfComments};
+        cmps = new JComponent[] { jlbTags, jtfTags, jlbComments, jtfComments };
         for (JComponent cp : cmps)
             pLeft.add(cp);
 
         JPanel outer = new JPanel(new BorderLayout());
         JPanel[] c_pns = new JPanel[2];
-        JComponent[][] c_cps = {{ jlbStuffType, jlbStuffName, jlbStuffTags },
-                { jtfStuffType, jtfStuffName, jtfStuffTags }};
+        JComponent[][] c_cps = { { jlbStuffType, jlbStuffName, jlbStuffTags },
+                { jtfStuffType, jtfStuffName, jtfStuffTags } };
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
@@ -76,7 +91,7 @@ public class SearchFrame extends JFrame {
         jpnKeywordSearch.add(pSouth, BorderLayout.SOUTH);
 
         // Buttons
-        for (JButton bt : new JButton[]{ jbtAndSearch, jbtOrSearch, jbtClose })
+        for (JButton bt : new JButton[] { jbtAndSearch, jbtOrSearch, jbtClose })
             pButtons.add(bt);
         add(pButtons, BorderLayout.SOUTH);
 

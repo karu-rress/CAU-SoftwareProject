@@ -1,3 +1,15 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * StuffPanel.java
+ *
+ * Represents a panel for displaying information
+ * about a Stuff object.
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,19 +24,25 @@ public class StuffPanel extends JPanel {
     private final JTextField jtfName = new JTextField();
     private final JTextField jtfTags = new JTextField();
 
+    /**
+     * Constructs a StuffPanel for displaying information about
+     * a Stuff object.
+     *
+     * @param s The Stuff object to display.
+     */
     public StuffPanel(Stuff s) {
         super(new BorderLayout());
         stuff = s;
 
         // West
-        for (JLabel lb : new JLabel[]{ jlbType, jlbName, jlbTags })
+        for (JLabel lb : new JLabel[] { jlbType, jlbName, jlbTags })
             pWest.add(lb);
 
         // Center
         jtfType.setText(stuff.getType());
         jtfName.setText(stuff.getName());
         jtfTags.setText(Tag.arrayToString(stuff.getTags()));
-        for (JTextField tf : new JTextField[] {jtfType, jtfName, jtfTags }) {
+        for (JTextField tf : new JTextField[] { jtfType, jtfName, jtfTags }) {
             tf.setEditable(false);
             pCenter.add(tf);
         }

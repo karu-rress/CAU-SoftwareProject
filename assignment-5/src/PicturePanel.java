@@ -1,3 +1,15 @@
+/**
+ *
+ * Spring 2024
+ * Software Project
+ *
+ * PicturePanel.java
+ *
+ * Displays an individual picture's timestamp,
+ * tags, image, associated objects, and comment.
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Image;
@@ -17,6 +29,13 @@ public class PicturePanel extends JPanel {
     private final ArrayList<StuffPanel> stuffPanels = new ArrayList<StuffPanel>();
     private final int picSize = 130;
 
+    /**
+     * Constructs a PicturePanel for displaying the details of a given picture.
+     * The panel includes the picture's timestamp, tags, image, associated stuffs,
+     * and comments.
+     *
+     * @param pic The Picture object to be displayed in this panel.
+     */
     public PicturePanel(Picture pic) {
         setLayout(new BorderLayout());
 
@@ -37,7 +56,7 @@ public class PicturePanel extends JPanel {
         jlbImage = new JLabel(null, icon, SwingConstants.CENTER);
 
         // Center
-        GridBagConstraints gbc = new GridBagConstraints();
+        var gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
         gbc.gridx = 0;
